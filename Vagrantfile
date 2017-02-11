@@ -13,8 +13,10 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
 
-  config.vm.provision "file", source: "provision/1.sources.list", destination: "/tmp/sources.list"
-  config.vm.provision "shell", path: "provision/2.provision.sh"
+  config.vm.provision "file", source: "provision/files/sources.list", destination: "/tmp/sources.list"
+  config.vm.provision "file", source: "provision/files/id_rsa", destination: "/tmp/id_rsa"
+  config.vm.provision "file", source: "provision/files/id_rsa.pub", destination: "/tmp/id_rsa.pub"
+  config.vm.provision "shell", path: "provision/provision.sh"
 
   # config.vm.box = "xenial"
   the_box = "xenial"
@@ -22,7 +24,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.100"
-    machine.vm.synced_folder "synced_folders/master/", "/vagrant", create: true
+    machine.vm.synced_folder ".", "/vagrant/", disabled: true
+    machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
+    machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "master"
       v.memory = 1536
@@ -33,7 +37,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "data1" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.101"
-    machine.vm.synced_folder "synced_folders/data1/", "/vagrant", create: true
+    machine.vm.synced_folder ".", "/vagrant/", disabled: true
+    machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
+    machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data1"
       v.memory = 1024
@@ -44,7 +50,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "data2" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.102"
-    machine.vm.synced_folder "synced_folders/data2/", "/vagrant", create: true
+    machine.vm.synced_folder ".", "/vagrant/", disabled: true
+    machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
+    machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data2"
       v.memory = 1024

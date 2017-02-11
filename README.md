@@ -5,7 +5,7 @@
 * Edit `Vagrantfile` where variable `the_box` is the VM you choose (in GFW, I downloaded and `vagrent box add`-ed an [Ubuntu 16.04 Xenial](https://cloud-images.ubuntu.com/xenial/current/) in advance)
 * `vagrant up`
   * 3 vm will be up: `master`, `data1`, `data2`
-  * each vm has a dedicated synced folder `/vagrant/local`, and `/vagrant/shared` is shared across all (this is useful so we can share set of rumtime files in `shared`, and config same paths in `local`, but result in different files in different vm)
+  * each vm has a dedicated synced folder `/vagrant/local`, and `/vagrant/shared` is shared across all (this is useful so we can share the same rumtime files in `shared`, and config same paths in `local`, but actually result in different output files in different vm)
   * `vagrant ssh <machine_name>` to each, and run `/vagrant/shared/init-ssh-key.sh` (some how my provision doesn't work, this is a walk-around)
 * Usage
   * `vagrant ssh <machine_name>`
@@ -27,42 +27,38 @@
   * configure hadoop (you can do it in host machine)
     * extract Hadoop in synced folder `shared`
     * edit `etc/hadoop/hadoop-env.sh`
-
-```
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export HADOOP_HEAPSIZE=200 # the VM mem is small
-export HADOOP_LOG_DIR=/vagrant/local/hadoop/logs.d
-```
+        ```
+        export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+        export HADOOP_HEAPSIZE=200 # the VM mem is small
+        export HADOOP_LOG_DIR=/vagrant/local/hadoop/logs.d
+        ```
 
     * edit `etc/hadoop/core-site.xml`
-
-```
-<property>
-  <name>fs.defaultFS</name>
-  <value>hdfs://master:9000</value>
-</property>
-```
+        ```
+        <property>
+          <name>fs.defaultFS</name>
+          <value>hdfs://master:9000</value>
+        </property>
+        ```
 
     * edit `etc/hadoop/hdfs-site.xml`
-
-```
-<property>
-  <name>dfs.namenode.name.dir</name>
-  <value>/vagrant/local/hadoop/names/</value>
-</property>
-<property>
-  <name>dfs.datanode.data.dir</name>
-  <value>/vagrant/local/hadoop/data/</value>
-</property>
-```
+        ```
+        <property>
+          <name>dfs.namenode.name.dir</name>
+          <value>/vagrant/local/hadoop/names/</value>
+        </property>
+        <property>
+          <name>dfs.datanode.data.dir</name>
+          <value>/vagrant/local/hadoop/data/</value>
+        </property>
+        ```
 
     * edit `etc/hadoop/slaves`
-
-```
-master
-data1
-data2
-```
+        ```
+        master
+        data1
+        data2
+        ```
 
   * start HDFS
       * `mv /vagrant/shared/hadoop-2.7.3 /vagrant/shared/hadoop`

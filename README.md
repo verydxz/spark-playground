@@ -4,8 +4,8 @@
 * Install `Vagrant`
 * `vagrant up`
     * 3 machines will be up: `master`, `data1`, `data2`
-    * each machine has synced folders in /vagrant
-    * `vagrant ssh <machine_name>` and run `/vagrant/shared/init-ssh-key.sh` (some how the provision doesn't work, this is a walk-around)
+    * each machine has synced folders in `/vagrant`, and `/vagrant/shared` is shared across all
+    * `vagrant ssh <machine_name>` and run `/vagrant/shared/init-ssh-key.sh` (some how my provision doesn't work, this is a walk-around)
 
 ## Usage
 * `vagrant ssh <machine_name>`

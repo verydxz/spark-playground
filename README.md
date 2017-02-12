@@ -81,10 +81,10 @@
     ```
     export SPARK_LOCAL_DIRS=/vagrant/local/spark/local.d
     export SPARK_EXECUTOR_INSTANCES=1
-    export SPARK_EXECUTOR_MEMORY=200M
+    export SPARK_EXECUTOR_MEMORY=500M
     export SPARK_DRIVER_MEMORY=500M
     export SPARK_MASTER_HOST=master
-    export SPARK_WORKER_MEMORY=200M
+    export SPARK_WORKER_MEMORY=500M
     export SPARK_WORKER_DIR=/vagrant/local/spark/work.d
     export SPARK_WORKER_OPTS="-Dspark.worker.cleanup.enabled=true"
     export SPARK_DAEMON_MEMORY=500M

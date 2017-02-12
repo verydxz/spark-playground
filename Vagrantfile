@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.101"
     machine.vm.synced_folder ".", "/vagrant/", disabled: true
-    machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
+    machine.vm.synced_folder "synced_folders/data1/", "/vagrant/local/", create: true
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data1"
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.102"
     machine.vm.synced_folder ".", "/vagrant/", disabled: true
-    machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
+    machine.vm.synced_folder "synced_folders/data2/", "/vagrant/local/", create: true
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data2"

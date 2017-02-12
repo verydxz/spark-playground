@@ -24,6 +24,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "master" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.100"
+    machine.vm.provision "shell", inline: "sudo echo master > /etc/hostname"
+    machine.vm.provision "shell", inline: "sudo hostname master"
     machine.vm.synced_folder ".", "/vagrant/", disabled: true
     machine.vm.synced_folder "synced_folders/master/", "/vagrant/local/", create: true
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
@@ -37,6 +39,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "data1" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.101"
+    machine.vm.provision "shell", inline: "sudo echo data1 > /etc/hostname"
+    machine.vm.provision "shell", inline: "sudo hostname data1"
     machine.vm.synced_folder ".", "/vagrant/", disabled: true
     machine.vm.synced_folder "synced_folders/data1/", "/vagrant/local/", create: true
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
@@ -50,6 +54,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "data2" do |machine|
     machine.vm.box = the_box
     machine.vm.network "private_network", ip: "192.168.100.102"
+    machine.vm.provision "shell", inline: "sudo echo data2 > /etc/hostname"
+    machine.vm.provision "shell", inline: "sudo hostname data2"
     machine.vm.synced_folder ".", "/vagrant/", disabled: true
     machine.vm.synced_folder "synced_folders/data2/", "/vagrant/local/", create: true
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true

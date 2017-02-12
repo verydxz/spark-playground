@@ -66,8 +66,8 @@
     * `source ~/.bashrc`
     * `hdfs namenode -format cluster0`
     * `$HADOOP_PREFIX/sbin/start-dfs.sh`
-    * check: http://192.168.100.100:50070
     * test: `hadoop fs -put <some_local_file> /`
+    * check: http://192.168.100.100:50070
 
 ## Spark
 * Download: http://spark.apache.org/downloads.html. As the time of writing, I chose ver `2.1.0 pre-built for Hadoop 2.7 and later`
@@ -83,7 +83,7 @@
     export SPARK_EXECUTOR_INSTANCES=1
     export SPARK_EXECUTOR_MEMORY=200M
     export SPARK_DRIVER_MEMORY=500M
-    export SPARK_MASTER_HOST=192.168.100.100
+    export SPARK_MASTER_HOST=master
     export SPARK_WORKER_MEMORY=200M
     export SPARK_WORKER_DIR=/vagrant/local/spark/work.d
     export SPARK_WORKER_OPTS="-Dspark.worker.cleanup.enabled=true"
@@ -102,5 +102,5 @@
     * `echo export PATH="\$SPARK_HOME/bin:\$PATH" >> ~/.bashrc`
     * `source ~/.bashrc`
     * `$SPARK_HOME/sbin/start-all.sh`
+    * test: `spark-shell --master spark://master:7077`
     * check: http://192.168.100.100:8080
-    * test: `spark-shell`

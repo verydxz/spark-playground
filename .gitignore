@@ -2,5 +2,5 @@
 .vagrant/*
 
 synced_folders/*
-!synced_folders/.keep
+!synced_folders/README
 !synced_folders/shared/init-ssh-key.sh

@@ -3,3 +3,4 @@
 
 synced_folders/*
 !synced_folders/.keep
+!synced_folders/shared/init-ssh-key.sh

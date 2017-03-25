@@ -68,7 +68,9 @@
   * `$HADOOP_PREFIX/sbin/start-dfs.sh`
   * check: http://192.168.100.100:50070
   * test: `hadoop fs -put <some_local_file> /`
-  * `hadoop fs` reference: http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/FileSystemShell.html
+
+* `hadoop fs` reference:
+  * http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/FileSystemShell.html
 
 ## Hive Setup
 * Before that, we need to configure and start `mapred`
@@ -97,12 +99,15 @@
   * `hadoop fs -chmod g+w /tmp`
   * `hadoop fs -chmod g+w /user/hive/warehouse`
   * `$HIVE_HOME/bin/schematool -dbType derby -initSchema` (if it fails, delete folder `metastore_db` in your user home and re-try)
-  * check:
+  * test:
     * `$HIVE_HOME/bin/hive`
     * `CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);`
     * `INSERT INTO TABLE invites PARTITION (ds='ds1') VALUES (1, 'a'), (2, 'b'), (3, 'c');`
     * `SELECT * FROM invites;`
     * `hadoop fs -cat /user/hive/warehouse/invites/ds=ds1/*`
+
+* Hive reference:
+  * https://cwiki.apache.org/confluence/display/Hive/Home
 
 ## Spark Setup
 * Download: http://spark.apache.org/downloads.html. As the time of writing, I chose ver `2.1.0 pre-built for Hadoop 2.7 and later`

@@ -23,6 +23,7 @@ Vagrant.configure("2") do |config|
   # from https://github.com/laravel/homestead/blob/master/scripts/homestead.rb
   # Prevent TTY Errors
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
   # base provision for all machines
   config.vm.provision "shell", path: "provision/provision.sh"
 
@@ -39,7 +40,7 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "master"
-      v.memory = 1536
+      v.memory = 2560
       v.cpus = 1
     end
   end
@@ -54,7 +55,7 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data1"
-      v.memory = 1024
+      v.memory = 1536
       v.cpus = 1
     end
   end
@@ -69,9 +70,24 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data2"
-      v.memory = 1024
+      v.memory = 1536
       v.cpus = 1
     end
+  end
+
+    config.vm.define "data3" do |machine|
+      machine.vm.box = the_box
+      machine.vm.network "private_network", ip: "192.168.100.103"
+      machine.vm.provision "shell", inline: "sudo echo data3 > /etc/hostname"
+      machine.vm.provision "shell", inline: "sudo hostname data3"
+      machine.vm.synced_folder ".", "/vagrant/", disabled: true
+      machine.vm.synced_folder "synced_folders/data3/", "/vagrant/local/", create: true
+      machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
+      machine.vm.provider "virtualbox" do |v|
+        v.name = "data3"
+        v.memory = 1536
+        v.cpus = 1
+      end
   end
 
   # Disable automatic box update checking. If you disable this, then

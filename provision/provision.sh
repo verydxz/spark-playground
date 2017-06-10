@@ -9,7 +9,7 @@ cat /tmp/id_rsa.pub >> ~/.ssh/authorized_keys
 # apt-get
 sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo cp /tmp/sources.list /etc/apt/sources.list
-sudo apt-get update
+sudo apt update
 
 # hosts
 sudo echo "192.168.100.100 master" >> /etc/hosts

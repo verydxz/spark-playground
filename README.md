@@ -18,7 +18,7 @@
 * We will use `HDFS` but not other parts for now (no `mapred` or `Yarn`)
 * Guide: http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/ClusterSetup.html
 * Setup Java in each vm
-  * `sudo apt-get install -y openjdk-8-jdk`
+  * `sudo apt install -y openjdk-8-jdk`
 * Configure Hadoop (you can do it in host machine)
   * extract Hadoop in synced folder `shared` and rename it `hadoop`
   * edit `etc/hadoop/hadoop-env.sh`

@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+Vagrant.require_version ">= 1.9.0", "< 2.0.0"
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -13,9 +15,15 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
 
+  # files for setting & provision
   config.vm.provision "file", source: "provision/files/sources.list", destination: "/tmp/sources.list"
   config.vm.provision "file", source: "provision/files/id_rsa", destination: "/tmp/id_rsa"
   config.vm.provision "file", source: "provision/files/id_rsa.pub", destination: "/tmp/id_rsa.pub"
+
+  # from https://github.com/laravel/homestead/blob/master/scripts/homestead.rb
+  # Prevent TTY Errors
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  # base provision for all machines
   config.vm.provision "shell", path: "provision/provision.sh"
 
   # config.vm.box = "xenial"

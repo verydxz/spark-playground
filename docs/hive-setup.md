@@ -1,5 +1,10 @@
 ## Hive Setup
 * Before that, we need to configure and start `mapred`
+  * edit 'etc/hadoop/yarn-env.sh', at the
+    ```
+    export YARN_LOG_DIR=/vagrant/local/hadoop/logs.d
+    ```
+    before `log directory & file` section
   * `$HADOOP_PREFIX/sbin/start-yarn.sh`
   * test:
     * `hadoop fs -mkdir /temp`
@@ -13,7 +18,7 @@
 
 * Configure Hive (you can do it in host machine)
   * extract Hive in synced folder `shared` and rename it `hive`
-  * hive's logs are in `local /tmp` folder, we will leave where it is as this is only a test env
+  * hive's logs are in the machine's `/tmp` folder, we will leave where it is as this is only a test env
 
 * Initialize Hive (in virtual machine)
   * `vagrant ssh master`
@@ -24,13 +29,49 @@
   * `hadoop fs -mkdir -p /user/hive/warehouse`
   * `hadoop fs -chmod g+w /tmp`
   * `hadoop fs -chmod g+w /user/hive/warehouse`
-  * `$HIVE_HOME/bin/schematool -dbType derby -initSchema` (if it fails, delete folder `metastore_db` in your user home and re-try)
+
+* Setup Hive metastore
+  * install MySQL and setup
+    * `sudo apt install -y mysql-server mycli`, login mysql as `root`:
+      * `CREATE DATABASE hive_metastore;`
+      * `CREATE USER 'hive'@'%' IDENTIFIED BY '<password>';`
+      * `GRANT ALL on hive_metastore.* TO 'hive'@'%';`
+      * `FLUSH PRIVILEGES;`
+    * [download](https://dev.mysql.com/downloads/connector/j/) and copy mysql driver to `$HIVE_HOME/lib`
+  * in `hive/conf`, `cp hive-default.xml.template hive-site.xml`, and in `hive-site.xml`
+    ```
+    <property>
+      <name>javax.jdo.option.ConnectionURL</name>
+      <value>jdbc:mysql://localhost/hive_metastore?createDatabaseIfNotExist=true</value>
+    </property>
+    <property>
+      <name>javax.jdo.option.ConnectionDriverName</name>
+      <value>com.mysql.jdbc.Driver</value>
+    </property>
+    <property>
+      <name>javax.jdo.option.ConnectionUserName</name>
+      <value>hive</value>
+    </property>
+    <property>
+      <name>javax.jdo.option.ConnectionPassword</name>
+      <value><password></value>
+      <description>password to use against metastore database</description>
+    </property>
+    ```
+  * also put below at the beginning of `hive-site.xml` (somehow several system props from java are incorrect)
+    ```
+    <property>
+      <name>system:java.io.tmpdir</name>
+      <value>/tmp/hivetmp</value>
+    </property>
+    ```
+  * `$HIVE_HOME/bin/schematool -dbType mysql -initSchema`
   * test:
     * `$HIVE_HOME/bin/hive`
     * `CREATE TABLE invites (foo INT, bar STRING) PARTITIONED BY (ds STRING);`
     * `INSERT INTO TABLE invites PARTITION (ds='ds1') VALUES (1, 'a'), (2, 'b'), (3, 'c');`
     * `SELECT * FROM invites;`
-    * `hadoop fs -cat /user/hive/warehouse/invites/ds=ds1/*`
+    * exit to shell and `hadoop fs -cat /user/hive/warehouse/invites/ds=ds1/*`
 
 * Hive reference:
   * https://cwiki.apache.org/confluence/display/Hive/Home

@@ -40,8 +40,8 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "master"
-      v.memory = 3072
-      v.cpus = 1
+      v.memory = 4096
+      v.cpus = 2
     end
   end
 

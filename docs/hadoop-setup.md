@@ -7,7 +7,7 @@
   * edit `etc/hadoop/hadoop-env.sh`
     ```
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-    export HADOOP_HEAPSIZE=200 # for small mem vm
+    export HADOOP_HEAPSIZE=500  # for small mem vm
     export HADOOP_LOG_DIR=/vagrant/local/hadoop/logs.d
     ```
   * edit `etc/hadoop/core-site.xml`
@@ -17,7 +17,7 @@
       <value>hdfs://master:9000</value>
     </property>
     ```
-  * edit `etc/hadoop/hdfs-site.xml` (some configs are for small vm)
+  * edit `etc/hadoop/hdfs-site.xml` (some configs are for small / test env)
     ```
     <property>
       <name>dfs.replication</name>

@@ -9,16 +9,16 @@ _GROUP="ubuntu"
 if [ -e /home/$_USER/.ssh/ ]; then
   echo "/home/$_USER/.ssh/ already exists."
 else
-  mkdir /home/$_USER/.ssh
+  sudo mkdir /home/$_USER/.ssh
   echo "/home/$_USER/.ssh/ created."
 fi
 
-cp /tmp/id_rsa /home/$_USER/.ssh/id_rsa
-cat /tmp/id_rsa.pub >> /home/$_USER/.ssh/authorized_keys
-chown $_USER:$_GROUP /home/$_USER/.ssh/id_rsa
-chown $_USER:$_GROUP /home/$_USER/.ssh/authorized_keys
-chmod 400 /home/$_USER/.ssh/id_rsa
-echo "SSH key installed."
+sudo cp /tmp/id_rsa /home/$_USER/.ssh/id_rsa
+sudo cat /tmp/id_rsa.pub >> /home/$_USER/.ssh/authorized_keys
+sudo chown $_USER:$_GROUP /home/$_USER/.ssh/id_rsa
+sudo chown $_USER:$_GROUP /home/$_USER/.ssh/authorized_keys
+sudo chmod 400 /home/$_USER/.ssh/id_rsa
+echo "Customized SSH key installed."
 
 # apt
 if [ -e /etc/apt/sources.list ]; then
@@ -28,8 +28,13 @@ sudo cp /tmp/sources.list /etc/apt/sources.list
 sudo apt update
 
 # hosts
-sudo sed -i '$a \
+if [ -e /tmp/hosts_updated ]; then
+  echo "hosts file already updated"
+else
+  sudo sed -i '$a \
 192.168.100.100 master \
 192.168.100.101 data1 \
 192.168.100.102 data2 \
 192.168.100.103 data3' /etc/hosts
+  sudo touch /tmp/hosts_updated
+fi

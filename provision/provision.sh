@@ -1,19 +1,24 @@
 #! /bin/sh
 
 # assume working with ubuntu16 xenial box, the user will be 'ubuntu'
-USERHOME="/home/ubuntu"
+_USER="ubuntu"
+_GROUP="ubuntu"
 
 # insert ssh keys
 # if this doesn't work, run the script in /vagrant/shared on each machine
-if [ -e $USERHOME/.ssh/ ]; then
-  echo "$USERHOME/.ssh/ already exists."
+if [ -e /home/$_USER/.ssh/ ]; then
+  echo "/home/$_USER/.ssh/ already exists."
 else
-  mkdir $USERHOME/.ssh
-  echo "$USERHOME/.ssh/ created."
+  mkdir /home/$_USER/.ssh
+  echo "/home/$_USER/.ssh/ created."
 fi
-cp /tmp/id_rsa $USERHOME/.ssh/id_rsa
-chmod 400 $USERHOME/.ssh/id_rsa
-cat /tmp/id_rsa.pub >> $USERHOME/.ssh/authorized_keys
+
+cp /tmp/id_rsa /home/$_USER/.ssh/id_rsa
+cat /tmp/id_rsa.pub >> /home/$_USER/.ssh/authorized_keys
+chown $_USER:$_GROUP /home/$_USER/.ssh/id_rsa
+chown $_USER:$_GROUP /home/$_USER/.ssh/authorized_keys
+chmod 400 /home/$_USER/.ssh/id_rsa
+echo "SSH key installed."
 
 # apt
 if [ -e /etc/apt/sources.list ]; then

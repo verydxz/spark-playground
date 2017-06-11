@@ -21,10 +21,10 @@
 * Install other useful packages, such as ...
   * `sudo apt install -y htop tmux git tig`
 
-## [Hadoop Setup](docs/hadoop-setup.md)
+## [Hadoop / HDFS Setup](docs/hadoop-setup.md)
 
-## [Hive Setup](docs/hive-setup.md)
+## [Hive (and Yarn) Setup](docs/hive-setup.md)
 
-## Impala Setup (target: same data layer with Hive)
+## Impala Setup (target: same metastore & storage layer with Hive)
 
 ## [Spark Setup](docs/spark-setup.md)

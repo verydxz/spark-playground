@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "master"
-      v.memory = 2560
+      v.memory = 3072
       v.cpus = 1
     end
   end
@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data1"
-      v.memory = 1536
+      v.memory = 2048
       v.cpus = 1
     end
   end
@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
     machine.vm.provider "virtualbox" do |v|
       v.name = "data2"
-      v.memory = 1536
+      v.memory = 2048
       v.cpus = 1
     end
   end
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
       machine.vm.synced_folder "synced_folders/shared/", "/vagrant/shared/", create: true
       machine.vm.provider "virtualbox" do |v|
         v.name = "data3"
-        v.memory = 1536
+        v.memory = 2048
         v.cpus = 1
       end
   end

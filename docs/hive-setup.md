@@ -1,5 +1,6 @@
 ## Hive Setup
-* Before that, we need to configure and start `mapred`
+
+* First, we need to configure and start `mapred`
   * edit `etc/hadoop/yarn-env.sh`, before `log directory & file` section
     ```
     export YARN_LOG_DIR=/vagrant/local/hadoop/logs.d

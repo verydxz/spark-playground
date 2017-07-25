@@ -1,6 +1,6 @@
 ## Hadoop Setup
 * Download: http://hadoop.apache.org/releases.html. As the time of writing, I chose ver `2.7.3`
-* We will use `HDFS` but not other parts for now (no `mapred` or `Yarn`)
+* We will use `HDFS` but not other parts for now (no `mapred` / `Yarn`)
 * Guide: http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/ClusterSetup.html
 * Configure Hadoop (you can do it in host machine)
   * extract Hadoop in synced folder `shared` and rename it `hadoop`

@@ -1,4 +1,5 @@
 ## Spark Setup
+
 * Download: http://spark.apache.org/downloads.html. As the time of writing, I chose ver `2.1.0 pre-built for Hadoop 2.7 and later`
 * Guide: http://spark.apache.org/docs/2.1.0/spark-standalone.html
 

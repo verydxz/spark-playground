@@ -34,7 +34,7 @@
   * install MySQL and setup
     * `sudo apt install -y mysql-server mycli`, login mysql as `root`:
       * `CREATE DATABASE hive_metastore;`
-      * `CREATE USER 'hive'@'%' IDENTIFIED BY '<password>';`
+      * `CREATE USER 'hive'@'%' IDENTIFIED BY '(your password)';`
       * `GRANT ALL on hive_metastore.* TO 'hive'@'%';`
       * `FLUSH PRIVILEGES;`
     * [download](https://dev.mysql.com/downloads/connector/j/) and copy mysql driver to `$HIVE_HOME/lib`
@@ -54,7 +54,7 @@
     </property>
     <property>
       <name>javax.jdo.option.ConnectionPassword</name>
-      <value><password></value>
+      <value>(your password)</value>
       <description>password to use against metastore database</description>
     </property>
     ```

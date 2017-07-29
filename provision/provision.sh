@@ -7,10 +7,10 @@ _GROUP="ubuntu"
 # insert ssh keys
 # if this doesn't work, run the script in /vagrant/shared on each machine
 if [ -e /home/$_USER/.ssh/ ]; then
-  echo "/home/$_USER/.ssh/ already exists."
+  echo "[provision] /home/$_USER/.ssh/ already exists."
 else
   sudo mkdir /home/$_USER/.ssh
-  echo "/home/$_USER/.ssh/ created."
+  echo "[provision] /home/$_USER/.ssh/ created."
 fi
 
 sudo cp /tmp/id_rsa /home/$_USER/.ssh/id_rsa
@@ -18,14 +18,7 @@ sudo cat /tmp/id_rsa.pub >> /home/$_USER/.ssh/authorized_keys
 sudo chown $_USER:$_GROUP /home/$_USER/.ssh/id_rsa
 sudo chown $_USER:$_GROUP /home/$_USER/.ssh/authorized_keys
 sudo chmod 400 /home/$_USER/.ssh/id_rsa
-echo "Customized SSH key installed."
-
-# apt
-if [ -e /etc/apt/sources.list ]; then
-  sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
-fi
-sudo cp /tmp/sources.list /etc/apt/sources.list
-sudo apt update
+echo "[provision] customized SSH key installed."
 
 # hosts
 if [ -e /tmp/hosts_updated ]; then
@@ -37,4 +30,16 @@ else
 192.168.100.102 data2 \
 192.168.100.103 data3' /etc/hosts
   sudo touch /tmp/hosts_updated
+  echo "[provision] hosts file updated."
 fi
+
+# apt
+if [ -e /etc/apt/sources.list ]; then
+  sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak
+fi
+sudo cp /tmp/sources.list /etc/apt/sources.list
+sudo apt update
+
+# root privilege
+sudo usermod -G sudo $_USER
+echo "[provision] user $_USER added to sudo group."

@@ -1,6 +1,6 @@
 ## Hive Setup
 
-* First, we need to configure and start `mapred`
+* First, we need to configure and start `yarn`
   * edit `etc/hadoop/yarn-env.sh`, before `log directory & file` section
     ```
     export YARN_LOG_DIR=/vagrant/local/hadoop/logs.d
@@ -64,6 +64,10 @@
       <name>system:java.io.tmpdir</name>
       <value>/tmp/hivetmp</value>
     </property>
+    <property>
+      <name>system:user.name</name>
+      <value>hive</value>
+    </property>
     ```
   * `$HIVE_HOME/bin/schematool -dbType mysql -initSchema`
   * test:
@@ -72,6 +76,21 @@
     * `INSERT INTO TABLE invites PARTITION (ds='ds1') VALUES (1, 'a'), (2, 'b'), (3, 'c');`
     * `SELECT * FROM invites;`
     * exit to shell and `hadoop fs -cat /user/hive/warehouse/invites/ds=ds1/*`
+  * hiveserver2
+    * update `hadoop`'s `core.site.xml`
+      ```
+      <property>
+        <name>hadoop.proxyuser.ubuntu.hosts</name>
+        <value>*</value>
+      </property>
+      <property>
+        <name>hadoop.proxyuser.ubuntu.groups</name>
+        <value>*</value>
+      </property>
+      ```
+      you can change 'ubuntu' to any user you use to connect to `hs2`, see [hadoop proxy user](http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/Superusers.html) for more information
+    * `$HIVE_HOME/bin/hiveserver2`, may put to background
+    * `$HIVE_HOME/bin/beeline -u jdbc:hive2://master:10000/default -n ubuntu`, again 'ubuntu' is just the default user, can change to others
 
 * Hive reference:
   * https://cwiki.apache.org/confluence/display/Hive/Home

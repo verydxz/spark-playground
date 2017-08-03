@@ -98,6 +98,7 @@
     ``` python
     import impala.dbapi
     import impala.util
+    # see: https://github.com/cloudera/impyla/blob/master/impala/dbapi.py
     conn = impala.dbapi.connect(host='master', port=10000, auth_mechanism='PLAIN')
     cur = conn.cursor()
     cur.execute('SELECT * FROM invites')

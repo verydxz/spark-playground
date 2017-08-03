@@ -77,7 +77,7 @@
     * `SELECT * FROM invites;`
     * exit to shell and `hadoop fs -cat /user/hive/warehouse/invites/ds=ds1/*`
   * hiveserver2
-    * update `hadoop`'s `core.site.xml`
+    * update `hadoop`'s `core-site.xml`
       ```
       <property>
         <name>hadoop.proxyuser.ubuntu.hosts</name>
@@ -91,6 +91,19 @@
       you can change 'ubuntu' to any user you use to connect to `hs2`, see [hadoop proxy user](http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/Superusers.html) for more information
     * `$HIVE_HOME/bin/hiveserver2`, may put to background
     * `$HIVE_HOME/bin/beeline -u jdbc:hive2://master:10000/default -n ubuntu`, again 'ubuntu' is just the default user, can change to others
+  * python
+    * `sudo apt install libsasl2-dev`
+    * `pip3 install impyla thrift_sasl sasl pandas ptpython -i https://pypi.douban.com/simple`
+    * run below
+    ``` python
+    import impala.dbapi
+    import impala.util
+    conn = impala.dbapi.connect(host='master', port=10000, auth_mechanism='PLAIN')
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM invites')
+    df = impala.util.as_pandas(cur)
+    print(df)
+    ```
 
 * Hive reference:
   * https://cwiki.apache.org/confluence/display/Hive/Home
